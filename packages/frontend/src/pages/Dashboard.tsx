@@ -31,7 +31,7 @@ export const Dashboard = () => {
             return;
         };
 
-        const WS_URL = import.meta.env.VITE_WS_URL || 'ws://localhost:8081';
+        const WS_URL = import.meta.env.VITE_WS_URL || 'ws://localhost:8080';
         const ws = new WebSocket(WS_URL);
         wsRef.current = ws;
         ws.onopen = () => {
@@ -73,13 +73,13 @@ export const Dashboard = () => {
 
     return (
         <div className="bg-gray-800 min-h-screen font-doto flex justify-center items-center">
-            <div className="w-1/2 flex flex-col shadow-[0_0_25px_15px_rgba(0,0,0,0.1)] rounded-2xl p-8">    
+            <div className="min-w-1/2 flex flex-col shadow-[0_0_15px_-3px_rgba(59,130,246,0.5)] border-blue-500 rounded-2xl p-8">    
                 <div className="flex flex-col space-y-2 h-96 overflow-y-auto mb-4 p-2 rounded-xl text-white">
                     {messages.map((msg, index) => (
                         msg.type === "system" ? (
                             <div key={index} className="flex justify-center">{msg.payload}</div>
                         ) : (
-                            <div key={index} className={`flex ${msg.payload.username !== username ? 'text-green-400' : 'text-blue-400'}`}>
+                            <div key={index} className={`flex ${msg.payload.username === username ? 'text-green-400' : 'text-blue-400'}`}>
                                 <span className="font-bold">{msg.payload.username}: {msg.payload.message}</span>
                             </div>
                         )
@@ -91,7 +91,7 @@ export const Dashboard = () => {
                     <button type="submit" className="col-span-1 px-4 py-2 bg-blue-500 rounded-xl">Send</button>
                 </form>
                 <div className="flex justify-center">
-                    <button onClick={handleClose} className="mt-4 px-4 py-2 bg-red-500 text-white rounded-xl w-1/4">Disconnect</button>
+                    <button onClick={handleClose} className="mt-4 px-4 py-2 bg-red-500 text-white rounded-xl min-w-1/4">Disconnect</button>
                 </div>
             </div>
         </div>
